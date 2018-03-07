@@ -19,5 +19,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://voting-app-backend.herokuapp.com:8081"
+  "proxy": "https://voting-app-backend.herokuapp.com/"
 }
