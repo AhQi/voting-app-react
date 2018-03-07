@@ -28,7 +28,7 @@ class UserSignUp extends React.Component {
 	      	password: this.refs.password.value
 	      };
     	console.log(this.refs.email.value);
-    	fetch('/signup', {
+    	fetch('https://voting-app-backend.herokuapp.com/signup', {
 	      method: 'POST',
 	      credentials: 'include',
 	      body: JSON.stringify(data),

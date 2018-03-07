@@ -31,7 +31,7 @@ class UserOwnedPolls extends React.Component {
         if(this.props.authenedStatus.isAuthened === false){
             history.push('/login');
         }else{
-           fetch('/GET/user', {
+           fetch('https://voting-app-backend.herokuapp.com/GET/user', {
     	      method: 'GET',
     	      credentials: 'include'
     	    }).then((resp)=>{ return resp.json() })

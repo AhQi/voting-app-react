@@ -49,7 +49,7 @@ class PollDetail extends React.Component {
 	deletePoll(e) {
     	e.preventDefault();
     	this.setState({confirm: false})
-    	fetch('/DELETE/polls/' + this.props.match.params.id, {
+    	fetch('https://voting-app-backend.herokuapp.com/DELETE/polls/' + this.props.match.params.id, {
     	   method: 'DELETE',
     	   credentials: 'include'
     	}).then((resp)=>{ 
@@ -69,7 +69,7 @@ class PollDetail extends React.Component {
 	      	option: e.target.id
 	     };
 	     
-		fetch('/PUT/polls/' + this.props.match.params.id, {
+		fetch('https://voting-app-backend.herokuapp.com/PUT/polls/' + this.props.match.params.id, {
     	   method: 'PUT',
     	   body: JSON.stringify(data),
     	   credentials: 'include',
@@ -116,7 +116,7 @@ class PollDetail extends React.Component {
 	      	option: this.state.newOption
 	     };
 	     
-		fetch('/PUT/polls/newOption/' + this.props.match.params.id, {
+		fetch('https://voting-app-backend.herokuapp.com/PUT/polls/newOption/' + this.props.match.params.id, {
     	   method: 'PUT',
     	   body: JSON.stringify(data),
     	   credentials: 'include',
@@ -158,7 +158,7 @@ class PollDetail extends React.Component {
     componentDidMount(){ 
     	console.log(this.props.authenedStatus);
         
-    	fetch('/GET/polls/' + this.props.match.params.id, {
+    	fetch('https://voting-app-backend.herokuapp.com/GET/polls/' + this.props.match.params.id, {
     	   method: 'GET',
     	   credentials: 'include'
     	}).then((resp)=>{ return resp.json() })

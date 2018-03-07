@@ -29,7 +29,7 @@ class ShowAllPolls extends React.Component {
     	const { history } = this.props;
     
         
-      fetch('/GET/polls', {
+      fetch('https://voting-app-backend.herokuapp.com/GET/polls', {
     	   method: 'GET',
     	   credentials: 'include'
     	}).then((resp)=>{ return resp.json() })

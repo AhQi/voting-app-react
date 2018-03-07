@@ -6,7 +6,7 @@ class Logout extends React.Component {
   componentDidMount(){
     const { history } = this.props;
     
-    fetch('/logout', {
+    fetch('https://voting-app-backend.herokuapp.com/logout', {
 	      method: 'GET',
 	      credentials: 'include'
 	    }).then((resp)=>{ 

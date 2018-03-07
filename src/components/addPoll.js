@@ -63,7 +63,7 @@ class NewPoll extends React.Component {
 	      	options: this.state.options
 	      };
     	
-    	fetch('/POST/polls', {
+    	fetch('https://voting-app-backend.herokuapp.com/POST/polls', {
 	      method: 'POST',
 	      credentials: 'include',
 	      body: JSON.stringify(data),
