@@ -128,7 +128,7 @@ class PollDetail extends React.Component {
     	    console.log(respData.poll.options);
 
     	    this.setState({pollTitle: respData.poll.title});
-
+    	    this.setState({options: respData.poll.options});
     	    
     	    var optionLabel = [];
     	    var optionCnt = [];
