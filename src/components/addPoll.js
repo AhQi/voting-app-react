@@ -10,7 +10,6 @@ const OptionList = (props) => (
 class NewPoll extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.handleOptionAdd = this.handleOptionAdd.bind(this);
@@ -74,11 +73,9 @@ class NewPoll extends React.Component {
 	    	.then((respData)=>{ 
 	    	
 	    	if(respData.user !== undefined){
-	    		console.log(respData.user);
 	    		this.props.loginChk(true);
 	    		history.push('/');
 	    	}else{
-	    		console.log(respData);
 	    		history.push('/polls/'+respData._id);
 	    	}
 	    });

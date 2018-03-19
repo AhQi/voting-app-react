@@ -6,7 +6,7 @@ import React from 'react';
 class UserLogin extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
+
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.state = {text:''};
 	}
@@ -20,7 +20,7 @@ class UserLogin extends React.Component {
 	      	email: this.refs.email.value,
 	      	password: this.refs.password.value
 	      };
-    	console.log(this.refs.email.value);
+
     	fetch('https://voting-app-backend.herokuapp.com/login', {
 	      method: 'POST',
 	      credentials: 'include',
@@ -32,7 +32,7 @@ class UserLogin extends React.Component {
 	    	.then((respData)=>{ 
 	    	
 	    	if(respData.user !== undefined){
-	    		console.log(respData.user);
+
 	    		this.props.loginChk({isAuthened:true, user: respData.user});
 	    		history.push('/');
 	    	}else{
@@ -41,6 +41,7 @@ class UserLogin extends React.Component {
 	    });
     	
 	}
+	
 	render() {
 	    return (
 	      <div>

@@ -39,11 +39,7 @@ class Header extends React.Component {
 	}
 	
 	componentWillReceiveProps(nextProps){
-	  console.log(nextProps);
-	  
 	    this.setState({showLink: (nextProps.authenedStatus.isAuthened === false)? this.state.publicLink : this.state.privateLink});
-	  
-	  
 	}
 	// render 為 class Component 中唯一需要定義的方法，其回傳 component 欲顯示的內容
 	render() {
