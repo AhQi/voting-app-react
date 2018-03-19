@@ -16,7 +16,6 @@ const ShowPolls = (props) => (
 class ShowAllPolls extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
 
 		this.state = {text: 'Now Loading', polls:[]};
 	}
@@ -34,7 +33,6 @@ class ShowAllPolls extends React.Component {
     	   credentials: 'include'
     	}).then((resp)=>{ return resp.json() })
     	  .then((respData)=>{ 
-    	    console.log(respData);
 
     	    this.setState({polls: respData});
     	    this.setState({text: 'See:'});

@@ -16,7 +16,6 @@ const ShowPolls = (props) => (
 class UserOwnedPolls extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
 
 		this.state = {text: 'Now Loading', polls:[]};
 	}

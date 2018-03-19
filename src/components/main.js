@@ -18,7 +18,6 @@ import {Helmet} from "react-helmet";
 class Main extends React.Component{
   constructor(props) {
 		super(props);
-		console.log(props);
 		
 		this.state = {};
 	}
@@ -31,7 +30,7 @@ class Main extends React.Component{
 		        <meta name="poll detail" content="" />
 		  </Helmet>
       <Switch>
-        <Route exact path='/' component={ShowAllPolls}/>
+        <Route exact path='/' component={ShowAllPolls} />
         <Route path='/polls' render={props => <Polls authenedStatus={this.props.authenedStatus} {...props} />}/>
         <Route exact path='/MyPolls' render={props => <UserOwnedPolls authenedStatus={this.props.authenedStatus} {...props} />}/>
         <Route exact path='/SignUp' render={props => <UserSignUp loginChk={this.props.loginChk} {...props} />}/>

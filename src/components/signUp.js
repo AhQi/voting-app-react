@@ -6,7 +6,7 @@ import Modal, {closeStyle} from 'simple-react-modal';
 class UserSignUp extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
+
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.state = {text:'', show: false};
 	}
@@ -27,7 +27,7 @@ class UserSignUp extends React.Component {
 	      	email: this.refs.email.value,
 	      	password: this.refs.password.value
 	      };
-    	console.log(this.refs.email.value);
+
     	fetch('https://voting-app-backend.herokuapp.com/signup', {
 	      method: 'POST',
 	      credentials: 'include',
@@ -39,7 +39,6 @@ class UserSignUp extends React.Component {
 	    	.then((respData)=>{ 
 	    	
 	    	if(respData.user !== undefined){
-	    		console.log(respData.user);
 	    		this.props.loginChk({isAuthened:true, user: respData.user});
 	    		history.push('/');
 	    	}else if(respData.error !== undefined){
