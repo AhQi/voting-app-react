@@ -1,11 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {Doughnut} from 'react-chartjs-2';
-import Modal, {closeStyle} from 'simple-react-modal';
+//import Modal, {closeStyle} from 'simple-react-modal';
 import '../main.css';
 import {Helmet} from "react-helmet";
+import Modal from 'react-modal';
 
-
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+//Modal.setAppElement('#PollDetail');
 
 var dynamicColors = function() {
     var r = Math.floor(Math.random() * 255);
@@ -22,10 +33,24 @@ class PollDetail extends React.Component {
 		this.handleVote = this.handleVote.bind(this);
 		this.deletePoll = this.deletePoll.bind(this);
 		this.onChange = this.onChange.bind(this);
-		this.onConfirm = this.onConfirm.bind(this);
 		this.onClose = this.onClose.bind(this);
 		this.handleOptionAdd = this.handleOptionAdd.bind(this);
-		this.state = {text:'', confirm: false, shareLink:'',showAddOptionBtn: false, newOption: '', alertMsg:'', data: {}, pollTitle:'Now Loading', options:[], color:[], isPollOwner: false, show: false};
+		this.openModal = this.openModal.bind(this);
+	    this.afterOpenModal = this.afterOpenModal.bind(this);
+	    this.closeModal = this.closeModal.bind(this);
+		this.state = {modalIsOpen: false, text:'', confirm: false, shareLink:'',showAddOptionBtn: false, newOption: '', alertMsg:'', data: {}, pollTitle:'Now Loading', options:[], color:[], isPollOwner: false, show: false};
+	}
+	openModal() {
+	    this.setState({modalIsOpen: true});
+	  }
+
+	afterOpenModal() {
+    	// references are now sync'd and can be accessed.
+    	this.subtitle.style.color = '#f00';
+	}
+
+	closeModal() {
+	  this.setState({modalIsOpen: false});
 	}
 	
 	onClose(){
@@ -42,14 +67,11 @@ class PollDetail extends React.Component {
 	  e.target.value = ''
 	  e.target.value = temp_value
 	}
-	onConfirm(){
-		this.setState({alertMsg: "Click O to confirm remove, otherwise click the area out of dialog!" });
-		this.setState({confirm: true});
-	}
+
 	deletePoll(e) {
     	e.preventDefault();
-    	this.setState({confirm: false})
-    	fetch('https://voting-app-backend.herokuapp.com/DELETE/polls/' + this.props.match.params.id, {
+    	this.setState({modalIsOpen: false});
+    	fetch('/DELETE/polls/' + this.props.match.params.id, {
     	   method: 'DELETE',
     	   credentials: 'include'
     	}).then((resp)=>{ 
@@ -69,7 +91,7 @@ class PollDetail extends React.Component {
 	      	option: e.target.id
 	     };
 	     
-		fetch('https://voting-app-backend.herokuapp.com/PUT/polls/' + this.props.match.params.id, {
+		fetch('/PUT/polls/' + this.props.match.params.id, {
     	   method: 'PUT',
     	   body: JSON.stringify(data),
     	   credentials: 'include',
@@ -116,7 +138,7 @@ class PollDetail extends React.Component {
 	      	option: this.state.newOption
 	     };
 	     
-		fetch('https://voting-app-backend.herokuapp.com/PUT/polls/newOption/' + this.props.match.params.id, {
+		fetch('/PUT/polls/newOption/' + this.props.match.params.id, {
     	   method: 'PUT',
     	   body: JSON.stringify(data),
     	   credentials: 'include',
@@ -128,7 +150,7 @@ class PollDetail extends React.Component {
     	    console.log(respData.poll.options);
 
     	    this.setState({pollTitle: respData.poll.title});
-    	    this.setState({options: respData.poll.options});
+			this.setState({options: respData.poll.options});
     	    
     	    var optionLabel = [];
     	    var optionCnt = [];
@@ -158,7 +180,7 @@ class PollDetail extends React.Component {
     componentDidMount(){ 
     	console.log(this.props.authenedStatus);
         
-    	fetch('https://voting-app-backend.herokuapp.com/GET/polls/' + this.props.match.params.id, {
+    	fetch('/GET/polls/' + this.props.match.params.id, {
     	   method: 'GET',
     	   credentials: 'include'
     	}).then((resp)=>{ return resp.json() })
@@ -223,15 +245,23 @@ class PollDetail extends React.Component {
 		
 		const ShowRemoveBtn = ()=>(
 			<p>
-			<button className="remove-button" type="button" onClick={this.onConfirm}>
+			<button className="remove-button" type="button" onClick={this.openModal}>
 					delete
 			</button>
-			<Modal closeOnOuterClick={true} show={this.state.confirm} onClose={this.onClose}>
-	          <a style={closeStyle} onClick={this.deletePoll}>O</a>
-	          
-			  <div>{this.state.alertMsg}</div>
-			  
-			</Modal>
+	        <Modal
+	          isOpen={this.state.modalIsOpen}
+	          onAfterOpen={this.afterOpenModal}
+	          onRequestClose={this.closeModal}
+	          style={customStyles}
+	          contentLabel="RemovePoll Modal"
+	        >
+	
+	          <h2 ref={subtitle => this.subtitle = subtitle}>Confirm</h2>
+	          <h3>Are you sure you want to remove the poll?</h3>
+	          <button onClick={this.deletePoll}>Yes</button>
+	          <button onClick={this.closeModal}>No</button>
+	        </Modal>
+			
 			</p>
 		)	
 
@@ -242,10 +272,7 @@ class PollDetail extends React.Component {
 		        <title>Your Poll</title>
 		        <meta name="poll detail" content="" />
 		    </Helmet>
-	        <Modal show={this.state.show} >
-	        <a style={closeStyle} onClick={this.onClose}>X</a>
-			  <div>{this.state.alertMsg}</div>
-			</Modal>
+
 			
 			<div className="row">
 			<div className="inline-option">
