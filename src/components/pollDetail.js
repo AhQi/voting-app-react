@@ -100,17 +100,14 @@ class PollDetail extends React.Component {
 	      }
     	}).then((resp)=>{ return resp.json() })
     	.then((respData)=>{ 
-    	    console.log(respData.poll.options);
 
     	    this.setState({pollTitle: respData.poll.title});
-
-    	    
+    
     	    var optionLabel = [];
     	    var optionCnt = [];
     	    respData.poll.options.forEach((val)=>{
     	      optionLabel.push(val.option);
     	      optionCnt.push(val.count);
-    	      console.log(val);
     	    });
     	    
     	    const data = {
@@ -146,8 +143,7 @@ class PollDetail extends React.Component {
 	        'Content-Type': 'application/json'
 	      }
     	}).then((resp)=>{ return resp.json() })
-    	.then((respData)=>{ 
-    	    console.log(respData.poll.options);
+    	  .then((respData)=>{ 
 
     	    this.setState({pollTitle: respData.poll.title});
 			this.setState({options: respData.poll.options});
@@ -160,17 +156,17 @@ class PollDetail extends React.Component {
     	    respData.poll.options.forEach((val)=>{
     	      optionLabel.push(val.option);
     	      optionCnt.push(val.count);
-    	      console.log(val);
+
     	    });
     	    
     	    const data = {
-          	labels: optionLabel,
-          	datasets: [{
-          		data: optionCnt,
-          		backgroundColor: color,
-          		hoverBackgroundColor: color
-          	}]
-          };
+          		labels: optionLabel,
+          		datasets: [{
+	          		data: optionCnt,
+	          		backgroundColor: color,
+	          		hoverBackgroundColor: color
+          		}]
+          	};
           this.setState({data: data, color: color, newOption: ''});
           
     	    //console.log(this.state.polls);
@@ -178,21 +174,18 @@ class PollDetail extends React.Component {
 	}
 	
     componentDidMount(){ 
-    	console.log(this.props.authenedStatus);
         
     	fetch('https://voting-app-backend.herokuapp.com/GET/polls/' + this.props.match.params.id, {
     	   method: 'GET',
     	   credentials: 'include'
     	}).then((resp)=>{ return resp.json() })
     	  .then((respData)=>{ 
-    	    console.log(respData.poll.title);
 
     	    this.setState({pollTitle: respData.poll.title});
     	    this.setState({options: respData.poll.options});
     	    this.setState({text: ''});
     	    
     	    if(respData.owner.email === this.props.authenedStatus.user){
-    	    	console.log('is owner');
     	    	this.setState({isPollOwner: true});	
     	    }
     	    
