@@ -10,6 +10,20 @@ class App extends React.Component {
     this.state = {authenedStatus: {isAuthened:false, user: null}};
     
   }
+
+  componentDidMount () {
+    const persisState = localStorage.getItem('isAuthened');
+    
+    if (!persisState) {
+      ;
+    }else{
+      this.setState({authenedStatus: JSON.parse(persisState)});
+    }
+  }
+  
+  componentWillUnmount () {
+    localStorage.setItem('isAuthened', JSON.stringify(this.state));
+  }
   
   loginChk = (newStatus) =>{
       console.log(newStatus);

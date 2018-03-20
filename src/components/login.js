@@ -32,7 +32,7 @@ class UserLogin extends React.Component {
 	    	.then((respData)=>{ 
 	    	
 	    	if(respData.user !== undefined){
-
+	    		localStorage.setItem('isAuthened',  JSON.stringify({isAuthened:true, user: respData.user}));
 	    		this.props.loginChk({isAuthened:true, user: respData.user});
 	    		history.push('/');
 	    	}else{

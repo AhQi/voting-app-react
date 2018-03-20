@@ -13,6 +13,7 @@ class Logout extends React.Component {
 	    	
 	    	if(resp.status === 200){
 	    		//console.log(resp.status);
+	    		localStorage.setItem('isAuthened',  JSON.stringify({isAuthened:false, user: null}));
 	    		this.props.loginChk({isAuthened:false, user: null});
                 history.push('/');
 	    	}else{
